@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  web:
+    container_name: crypto_web-ui
+    image: node:alpine
+    build:
+      context: ../pm2-web-ui
+    restart: always
+    volumes:
+      - ../pm2-web-ui:/usr/src
+      - /usr/src/node_modules
+    ports:
+      - 3000
+    env_file:
+      - ../pm2-web-ui/.env
+    networks:
+      - crypto-network
+    depends_on:
+      - mongo
+      - indicators
+
+networks:
+  crypto-network:
+
+volumes:
+  web:
